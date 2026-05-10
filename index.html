@@ -1444,7 +1444,7 @@ h1{
       <textarea id="editText" placeholder="例如：團體課程、包場、老師外出"></textarea>
     </div>
     <div class="hint">
-      A 管理模式填空間與使用者；B 查看模式只顯示系統自動判斷後的「可預約／尚有空間／已額滿／不可預約／公休」。
+      A 管理模式填空間與使用者；B 查看模式只顯示系統自動判斷後的「可預約／已額滿／不可預約／公休」。
     </div>
     <div class="editor-actions">
       <button id="closeEditor">取消</button>
@@ -1736,16 +1736,16 @@ import {
         content.className = "slot-content";
 
         const statusKey = deriveSlotStatus(obj, s);
+        const displayStatusKey = statusKey === "limited" ? "available" : statusKey;
         const statusTextMap = {
           available: "可預約",
-          limited: "尚有空間",
           full: "已額滿",
           unavailable: "不可預約",
           closed: "公休"
         };
 
         const detail = makeAdminDetail(obj, s);
-        content.innerHTML = `<span class="status-text ${statusKey}">${statusTextMap[statusKey] || "可預約"}</span>${detail ? `<div class="admin-detail">${detail}</div>` : ""}`;
+        content.innerHTML = `<span class="status-text ${displayStatusKey}">${statusTextMap[displayStatusKey] || "可預約"}</span>${detail ? `<div class="admin-detail">${detail}</div>` : ""}`;
 
         slot.appendChild(label);
         slot.appendChild(content);
