@@ -1340,6 +1340,22 @@ h1{
 }
 </style>
 
+
+<style>
+/* v28 public booking status patch */
+.mode-b .slot{
+  cursor:default !important;
+}
+.slot.status-block-full{
+  background:#ffd8d8 !important;
+  border:1px solid rgba(166,71,71,.28) !important;
+}
+.slot.status-block-full .status-text{
+  color:#a64747 !important;
+  font-weight:800 !important;
+}
+</style>
+
 </head>
 <body>
   <div class="app">
@@ -1352,7 +1368,7 @@ h1{
             <div class="brand-sub" >花晶能量×紓壓美學</div>
           </div>
         </div>
-        <h1><span id="titleYearMonth"></span><span>空間使用紀錄</span></h1>
+        <h1><span id="titleYearMonth"></span><span>可預約時段</span></h1>
         <div class="controls no-capture">
           <button id="modeA" type="button">管理</button>
           <button id="modeB" type="button">查看</button><span id="adminIdentity" class="admin-identity no-capture"></span>
@@ -1364,7 +1380,7 @@ h1{
 
       <div class="content">
         <main>          <div class="calendar" id="calendar"></div>
-          <div class="quote" >＊ 若有臨時調整，請以最新公告為主，感謝您的理解與配合。＊</div><div id="syncStatus" class="quote no-capture">尚未連線資料庫</div>
+          <div class="quote" >＊ 此頁僅供查看可預約時段；實際預約請透過官方 LINE 人工確認。＊</div><div id="syncStatus" class="quote no-capture">尚未連線資料庫</div>
         </main>
 
         <aside>
@@ -1737,6 +1753,7 @@ import {
 
         const statusKey = deriveSlotStatus(obj, s);
         const displayStatusKey = statusKey === "limited" ? "available" : statusKey;
+        slot.classList.toggle("status-block-full", displayStatusKey === "full");
         const statusTextMap = {
           available: "可預約",
           full: "已額滿",
